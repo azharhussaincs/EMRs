@@ -78,11 +78,11 @@ async def test_emr_validate_and_audit():
 
         # Test ingestion
         ingest_res = await ac.post("/api/v1/emr/ingest", json=emr_payload)
-        assert ingest_res.status_code == 202
+        assert ingest_res.status_code == 201
         ingest_data = ingest_res.json()
-        assert ingest_data["patient_id"] == "PT-TEST-001"
-        assert ingest_data["total_observations"] == 1
-        assert ingest_data["total_conditions"] == 1
+        assert ingest_data["patient_record"]["patient_id"] == "PT-TEST-001"
+        assert ingest_data["patient_record"]["total_biomarker_measurements"] == 1
+        assert len(ingest_data["patient_record"]["conditions"]) == 1
 
         # Test audit log verification
         audit_res = await ac.get("/api/v1/audit/logs")

@@ -57,6 +57,10 @@ class Settings(BaseSettings):
     # Generative AI & Knowledge Base configuration placeholders
     GENAI_PROVIDER: str = "mock"  # Configurable: "mock", "gemini", "openai", "bedrock", "local-vllm"
     GENAI_MODEL_NAME: str = "gemini-1.5-pro"
+    GENAI_API_KEY: Optional[str] = None
+    GENAI_API_BASE_URL: Optional[str] = None
+    GENAI_TIMEOUT_SECONDS: int = 30
+    GENAI_MAX_OUTPUT_TOKENS: int = 1024
     VECTOR_DB_URL: Optional[str] = None
 
     model_config = SettingsConfigDict(

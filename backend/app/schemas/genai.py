@@ -3,6 +3,11 @@ from enum import Enum
 from typing import List, Optional
 from pydantic import BaseModel, Field
 from app.clinical.domains import ClinicalGuidelineReference
+from app.schemas.explanation import (
+    AIExplanationContext,
+    ExplanationBiomarkerFact,
+    ExplanationTrajectorySummary,
+)
 
 
 class TargetAudience(str, Enum):

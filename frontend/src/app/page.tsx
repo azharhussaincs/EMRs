@@ -5,9 +5,10 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WorkflowStepper } from '@/components/clinical/WorkflowStepper';
 import { DomainOverview } from '@/components/clinical/DomainOverview';
+import { EMRIngestionView } from '@/components/clinical/EMRIngestionView';
 import { fetchHealthStatus, fetchClinicalDomains } from '@/lib/api';
 import type { HealthCheckResponse, DiseaseDomainRegistryEntry } from '@/types/clinical';
-import { ArrowRight, Server, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const FALLBACK_DOMAINS: DiseaseDomainRegistryEntry[] = [
   {
@@ -112,7 +113,7 @@ export default function Home() {
         if (domainRes && domainRes.length > 0) {
           setDomains(domainRes);
         }
-      } catch (err) {
+      } catch {
         setIsBackendConnected(false);
       }
     }
@@ -131,85 +132,44 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-teal-50 border border-teal-200 text-teal-800 text-xs font-semibold uppercase tracking-wider mb-2">
-                Level 0 Production Foundation
+                Phase 4 • EMR Ingestion, Risk Stratification, AI Narrative & Supporting Evidence Active
               </div>
               <h1 className="text-xl font-bold text-slate-900 tracking-tight">
                 Generative AI-Based Clinical Risk Assessment Using EMR
               </h1>
               <p className="text-xs text-slate-600 mt-1 max-w-3xl leading-relaxed">
-                A serious clinical AI platform for longitudinal multi-disease risk prediction, 
-                synthesizing electronic medical records into auditable risk trajectories, 
-                dual-perspective AI rationales, and consensus evidence citations.
+                Ingest standardized, de-identified FHIR R4 medical records, extract longitudinal biomarker trajectories, assess clinical risk stratification, synthesize strictly grounded clinical explanations, and review verified clinical practice guidelines.
               </p>
             </div>
 
             {/* Linear Workflow Pill */}
             <div className="hidden lg:flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shrink-0">
-              <span className="text-slate-900 font-semibold">Workflow:</span>
-              <span>Patient/EMR</span>
+              <span className="text-teal-800 font-semibold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">1. EMR Ingestion</span>
               <ArrowRight className="w-3 h-3 text-slate-400" />
-              <span>Clinical Info</span>
+              <span className="text-teal-800 font-semibold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">2. Clinical Info</span>
               <ArrowRight className="w-3 h-3 text-slate-400" />
-              <span>Risk</span>
+              <span className="text-teal-800 font-semibold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">3. Risk (DM & CVD)</span>
               <ArrowRight className="w-3 h-3 text-slate-400" />
-              <span>AI Explanation</span>
+              <span className="text-teal-800 font-semibold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">4. AI Explanation</span>
               <ArrowRight className="w-3 h-3 text-slate-400" />
-              <span>Evidence</span>
+              <span className="text-teal-800 font-semibold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">5. Evidence</span>
             </div>
           </div>
         </section>
 
-        {/* 1. Clinical Decision Support Stepper */}
-        <WorkflowStepper />
+        {/* 1. Clinical Ingestion & Inspection Screen */}
+        <section>
+          <EMRIngestionView />
+        </section>
 
-        {/* 2. Target Disease Domains */}
-        <DomainOverview domains={domains} />
+        {/* 2. Clinical Decision Support Workflow Stepper */}
+        <section>
+          <WorkflowStepper />
+        </section>
 
-        {/* 3. System Architecture Foundation Status */}
-        <section className="bg-white border border-slate-200 rounded-xl p-6 shadow-xs">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-            <div>
-              <h2 className="text-sm font-semibold text-slate-900 tracking-tight">
-                Architecture & Security Foundation
-              </h2>
-              <p className="text-xs text-slate-500">
-                Subsystem readiness and regulatory safeguards
-              </p>
-            </div>
-            <span className="inline-flex items-center gap-1 text-xs text-emerald-700 font-medium bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              FastAPI Core Operational
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div className="p-3.5 rounded-lg border border-slate-200 bg-slate-50/60">
-              <span className="font-semibold text-slate-800 block mb-1">
-                EMR Ingestion & Schema
-              </span>
-              <p className="text-[11px] text-slate-600 leading-relaxed">
-                FHIR R4-aligned patient demographic, LOINC observation, and ICD-10 condition validation.
-              </p>
-            </div>
-
-            <div className="p-3.5 rounded-lg border border-slate-200 bg-slate-50/60">
-              <span className="font-semibold text-slate-800 block mb-1">
-                Multi-Model Risk Engine
-              </span>
-              <p className="text-[11px] text-slate-600 leading-relaxed">
-                Modular interfaces for calibrated empirical probabilities with 95% confidence intervals.
-              </p>
-            </div>
-
-            <div className="p-3.5 rounded-lg border border-slate-200 bg-slate-50/60">
-              <span className="font-semibold text-slate-800 block mb-1">
-                HIPAA §164.312 Audit Engine
-              </span>
-              <p className="text-[11px] text-slate-600 leading-relaxed">
-                Cryptographic SHA-256 tamper-evident event log ensuring strict patient privacy.
-              </p>
-            </div>
-          </div>
+        {/* 3. Target Disease Domains */}
+        <section>
+          <DomainOverview domains={domains} />
         </section>
       </main>
 
